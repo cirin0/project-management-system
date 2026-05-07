@@ -1,0 +1,20 @@
+input LoginInput {
+    email: String! @rules(apply: ["required", "email"])
+    password: String! @rules(apply: ["required"])
+}
+
+input RegisterInput {
+    name: String @rules(apply: ["required"])
+    email: String! @rules(apply: ["required", "email", "unique:users,email"])
+    password: String! @rules(apply: ["required"])
+}
+
+type AuthPayload {
+    token: String!
+    user: User
+}
+
+extend type Mutation {
+    login(input: LoginInput!): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\Login")
+    register(input: RegisterInput!): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\Register")
+}

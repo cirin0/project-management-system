@@ -1,0 +1,5 @@
+schema:
+  - ./graphql/**.graphql
+  - ./schema-directives.graphql
+  - ./programmatic-types.graphql
+documents: '**/*.graphql'

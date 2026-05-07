@@ -18,51 +18,6 @@ represent free-form human-readable text.
 """
 scalar String
 
-"""
-The `Int` scalar type represents non-fractional signed whole numeric
-values. Int can represent values between -(2^31) and 2^31 - 1. 
-"""
-scalar Int
-
-"The `Boolean` scalar type represents `true` or `false`."
-scalar Boolean
-
-"Information about pagination using a fully featured paginator."
-type PaginatorInfo {
-  "Number of items in the current page."
-  count: Int!
-
-  "Index of the current page."
-  currentPage: Int!
-
-  "Index of the first item in the current page."
-  firstItem: Int
-
-  "Are there more pages after this one?"
-  hasMorePages: Boolean!
-
-  "Index of the last item in the current page."
-  lastItem: Int
-
-  "Index of the last available page."
-  lastPage: Int!
-
-  "Number of items per page."
-  perPage: Int!
-
-  "Number of total available items."
-  total: Int!
-}
-
-"A paginated list of User items."
-type UserPaginator {
-  "Pagination information about the list of items."
-  paginatorInfo: PaginatorInfo!
-
-  "A list of User items."
-  data: [User!]!
-}
-
 "Directions for ordering a list of records."
 enum SortOrder {
   "Sort records in ascending order."
@@ -116,6 +71,9 @@ enum Trashed {
   "Only return non-trashed results."
   WITHOUT
 }
+
+"The `Boolean` scalar type represents `true` or `false`."
+scalar Boolean
 
 "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations."
 type __Schema {
