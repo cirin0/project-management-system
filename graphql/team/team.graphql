@@ -1,0 +1,31 @@
+type Team {
+    id: ID
+    name: String
+    description: String
+    owner: User
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+input CreateTeamInput {
+    name: String!
+    description: String
+}
+
+input UpdateTeamInput {
+    name: String
+    description: String
+}
+
+extend type Query {
+    team(id: ID!): Team @find
+    teams: [Team!]! @all
+}
+
+extend type Mutation {
+    createTeam(input: CreateTeamInput!): Team! @field(resolver: "App\\GraphQL\\Mutations\\CreateTeam")
+    updateTeam(id: ID!, input: UpdateTeamInput!): Team! @update
+    deleteTeam(id: ID! @whereKey): Team! @delete
+    addUserToTeam(teamId: ID!, userId: ID!): Team! @field(resolver: "App\\GraphQL\\Mutations\\AddUserToTeam")
+    removeUserFromTeam(teamId: ID!, userId: ID!): Team! @field(resolver: "App\\GraphQL\\Mutations\\RemoveUserFromTeam")
+}
