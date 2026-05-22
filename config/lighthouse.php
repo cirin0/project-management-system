@@ -27,7 +27,7 @@ return [
          * Beware that middleware defined here runs before the GraphQL execution phase.
          * Make sure to return spec-compliant responses in case an error is thrown.
          */
-        'middleware' => [
+        'middleware' => array_values(array_filter([
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
 
             // Ensures the request is not vulnerable to cross-site request forgery.
@@ -38,11 +38,13 @@ return [
 
             // Logs in a user if they are authenticated. In contrast to Laravel's 'auth'
             // middleware, this delegates auth and permission checks to the field level.
-            Nuwave\Lighthouse\Http\Middleware\AttemptAuthentication::class,
+            env('LIGHTHOUSE_AUTH_DISABLED', false)
+                ? null
+                : Nuwave\Lighthouse\Http\Middleware\AttemptAuthentication::class,
 
             // Logs every incoming GraphQL query.
             // Nuwave\Lighthouse\Http\Middleware\LogGraphQLQueries::class,
-        ],
+        ])),
 
         /*
          * The `prefix`, `domain` and `where` configuration options are optional.
@@ -63,7 +65,7 @@ return [
     |
     */
 
-    'guard' => 'sanctum',
+    'guard' => env('LIGHTHOUSE_AUTH_DISABLED', false) ? null : 'sanctum',
 
     /*
     |--------------------------------------------------------------------------

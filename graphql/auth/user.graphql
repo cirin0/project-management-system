@@ -7,5 +7,5 @@ type User {
 }
 
 extend type Query {
-    me: User @guard @auth
+    me: User @field(resolver: "App\\GraphQL\\Queries\\Me")
 }
